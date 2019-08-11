@@ -4,6 +4,10 @@ A simple, powerful method to track the performance of complex react-native compo
 
 ![](./assets/simulator-screenshot.png)
 
+Sometimes it is useful to check the elapsed time of specific part of an app. The method described here, is a simple timer snippet that can be injected almost anywhere in a react-native app and, when used in combination with the simulator perf-monitor can give valuable insights into what parts of the code need to be optimised.
+
+The App is an example that monitors the performance of the AsyncStorage community library for storing and retrieving large objects.
+
 ## Prerequisites
 
 Install node, react-native, react-native-cli
@@ -12,9 +16,9 @@ Install node, react-native, react-native-cli
 
 See also package.json.
 ```
+"@react-native-community/async-storage": "^1.6.1",
 "react": "16.8.6",
-"react-native": "0.60.4",
-"react-native-svg": "^9.5.3"
+"react-native": "0.60.4"
 ```
 
 ## Build
@@ -22,42 +26,41 @@ See also package.json.
 Clone this repo.
 ```
 yarn install
-yarn add react-native-svg
-cd ios; pod install
+yarn add @react-native-community/async-storage
+cd ios && pod install
 react-native run-ios or react-native run-android.
+```
+## Timer
+```
+  interval = null;
+  startTime = 0;
+  state = { perf: 0 }
+  ...
+
+  trackPerf = (run) => {
+    if(run) {
+      this.interval && clearInterval(this.interval);
+      this.setState({ perf: 0 });
+      this.startTime = new Date();
+      this.interval = setInterval(() => {
+        const elapsed = (new Date() - this.startTime) + this.state.perf;
+        this.setState({ perf: elapsed, });
+      }, 100);
+    } else {
+      this.interval && clearInterval(this.interval);
+    }
+  }
+
 ```
 
 ## Use (see App.js)
-
 ```
-      <RadialProgressBar size={diameter} width={stroke} fill={percentage}
-        tintColor={'indigo'} backgroundColor={'#eee'}>
-        {
-          (percent) => (
-            <View style={styles.circleStyle}>
-              <Text style={styles.textStyle}>{`${percent}%`}</Text>
-            </View>
-          )
-        }
-      </RadialProgressBar>
+  this.trackPerf(true);
+  await Store.set(this.ARRAY, storedArray, this.setError);
+  const newItem = await Store.get(this.ARRAY, this.setError);
+  this.trackPerf(false);
 ```
-
-## props
-
-| prop  | Description |
-| ------------- | ------------- |
-| size  | outer diameter of the circle  |
-| width  | width of the stroke  |
-| fill  | percentage of the circle to be displayed in "tintColor" (see below)  |
-| tintColor  | color of the active circle  |
-| backgroundColor  | color of passive background circle  |
-
-The circles are drawn on a transparent surface.
 
 ## Authors
 
 * **Miguel Albrecht** - [zapalote](https://zapalote.com/)
-
-## Acknowledgments
-
-* Thanks to [Greg Douglas](https://codepen.io/xgad/) who gave inspiration and shared his [css/SVG](https://codepen.io/xgad/post/svg-radial-progress-meters) implementation.
