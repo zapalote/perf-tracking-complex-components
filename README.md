@@ -4,7 +4,7 @@ A simple, powerful method to track the performance of complex react-native compo
 
 ![](./assets/simulator-screenshot.png)
 
-Sometimes it is useful to check the elapsed time of specific part of an app. The method described here, is a simple timer snippet that can be injected almost anywhere in a react-native app and, when used in combination with the simulator perf-monitor can give valuable insights into what parts of the code need to be optimised.
+Sometimes it is useful to check the elapsed time of a specific part of an app. The method described here, is a simple timer snippet that can be injected almost anywhere in a react-native app and, when used in combination with the simulator perf-monitor can give valuable insights into what parts of the code need to be optimised.
 
 The App is an example that monitors the performance of the AsyncStorage community library for storing and retrieving large objects.
 
