@@ -8,7 +8,7 @@ Sometimes it is useful to check the elapsed time of a specific part of an app. T
 
 The App is an example that monitors the performance of the AsyncStorage community library for storing and retrieving large objects.
 
-The full story is available ![here](https://medium.com/@miguel.albrecht/tracking-the-performance-of-complex-components-in-react-native-c7bee13687a4).
+The full story is available [here](https://medium.com/@miguel.albrecht/tracking-the-performance-of-complex-components-in-react-native-c7bee13687a4).
 
 ## Prerequisites
 
