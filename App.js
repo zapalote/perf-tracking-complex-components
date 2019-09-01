@@ -30,7 +30,7 @@ class App extends Component {
       this.setState({ perf: 0 });
       this.startTime = new Date();
       this.interval = setInterval(() => {
-        const elapsed = (new Date() - this.startTime) + this.state.perf;
+        const elapsed = new Date() - this.startTime;
         this.setState({ perf: elapsed, });
       }, 100);
     } else {
