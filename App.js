@@ -14,7 +14,8 @@ class App extends Component {
   startTime = 0;
 
   componentDidMount = async () => {
-    const storedArray = await Store.get(this.ARRAY, this.setError);
+    Store.setErrorMethod(this.setError);
+    const storedArray = await Store.get(this.ARRAY);
     this.setState({
       storedArray: storedArray? storedArray: [],
     });
@@ -46,15 +47,15 @@ class App extends Component {
     }
 
     this.trackPerf(true);
-    await Store.set(this.ARRAY, storedArray, this.setError);
-    const newItem = await Store.get(this.ARRAY, this.setError);
+    await Store.set(this.ARRAY, storedArray);
+    const newItem = await Store.get(this.ARRAY);
     this.trackPerf(false);
     this.setState({ storedArray: newItem });
   };
 
   clearArray = async () => {
     await Store.remove(this.ARRAY);
-    const newItem = await Store.get(this.ARRAY, this.setError);
+    const newItem = await Store.get(this.ARRAY);
     this.setState({needRestart: true, storedArray: newItem? newItem : [], perf: 0, errorMsg: ''});
   };
 
